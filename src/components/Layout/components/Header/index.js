@@ -1,19 +1,36 @@
+import React from 'react';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 import { useEffect, useState } from 'react'
 import classNames from 'classnames/bind'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleXmark, faSpinner, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import Tippy from '@tippyjs/react/headless';
-
+import { faCircleXmark, faSpinner, faMagnifyingGlass, faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard } from '@fortawesome/free-solid-svg-icons'
+// import Tippy from '@tippyjs/react/headless';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 
 import styles from './Header.module.scss'
 import images from '~/assets/images'
 import AccountItem from '~/components/AccountItem';
 import Button from '~/components/Button';
-
-
+import Menu from '~/components/Popper/Menu';
 
 const cx = classNames.bind(styles)
+
+const MENU_ITEMS = [
+    {
+        icon: <FontAwesomeIcon icon={faEarthAsia} />,
+        title: 'English',
+    },
+    {
+        icon: <FontAwesomeIcon icon={faCircleQuestion} />,
+        title: 'Feedback and Help',
+        to: '/feadback',
+    },
+    {
+        icon: <FontAwesomeIcon icon={faKeyboard} />,
+        title: 'Keyboard shortcut ',
+    },
+];
 
 // console.log(images.logo)
 
@@ -37,7 +54,7 @@ function Header() {
             <Tippy
                 interactive
                 visible={searchResult.length > 0}
-                render={attrs => (
+                render={(attrs) => (
                     <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                         <PopperWrapper>
                             <h4 className={'search-title'}>
@@ -48,9 +65,6 @@ function Header() {
                             <AccountItem />
                             <AccountItem />
                             <AccountItem />
-
-
-
                         </PopperWrapper>
                     </div>
                 )}
@@ -73,8 +87,15 @@ function Header() {
                 {/* <Button primary href="https://fullstack.edu.vn/">Login</Button> */}
                 <Button text>Upload</Button>
                 <Button primary> Log in</Button>
-            </div>
 
+                <Menu items={MENU_ITEMS}>
+                    <Button className={cx('more-btn')}>
+                        <FontAwesomeIcon icon={faEllipsisVertical} />
+                    </Button>
+                </Menu>
+
+
+            </div>
         </div>
     </header >
 }
